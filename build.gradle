@@ -4,6 +4,7 @@ plugins {
     id 'idea'
     id 'maven-publish'
     id 'net.neoforged.gradle.userdev' version '7.0.97'
+    id 'com.github.johnrengelman.shadow' version '7.0.0'
 }
 
 version = mod_version
@@ -110,6 +111,9 @@ dependencies {
     // For more info:
     // http://www.gradle.org/docs/current/userguide/artifact_dependencies_tutorial.html
     // http://www.gradle.org/docs/current/userguide/dependency_management.html
+
+    // https://mvnrepository.com/artifact/org.telegram/telegrambots
+    implementation 'org.telegram:telegrambots:6.9.7.1'
 }
 
 // This block of code expands all declared replace properties in the specified resource targets.
@@ -161,4 +165,16 @@ idea {
         downloadSources = true
         downloadJavadoc = true
     }
+}
+
+shadowJar {
+    archiveBaseName.set('telegrambridge')
+    archiveVersion.set('1.0.0')
+    mergeServiceFiles()
+
+    zip64 true
+}
+
+build {
+    dependsOn shadowJar
 }
